@@ -45,26 +45,44 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
         document.getElementById('current-' + activePlayer).textContent = roundScore;
     }else {
         // activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
-
-        //ene toglogchiin eeljindee tsugluulsan onoog 0 bolgono
-        roundScore = 0;
-        document.getElementById('current-' + activePlayer).textContent = 0;
-        
-
-        //toglogchiin eeljiin nuguu ruu shiljuulne
-        if(activePlayer === 0){
-            activePlayer = 1;
-        }else{
-            activePlayer = 0;
-        } 
-
-        //ulaan tsegiig shiljuuleh
-
-        document.querySelector('.player-0-panel').classList.toggle('active');
-        document.querySelector('.player-1-panel').classList.toggle('active');
-
-        // shoog tur alga bolgoh
-
-        diceDom.style.display = 'none';
+        switchToNextPlayer();
     }
 });
+
+//hold tovchnii event listener 
+document.querySelector('.btn-hold').addEventListener('click', function () {
+    // ug toglogchiin tsugluulsan eeljiin onoog global onoon deer nemj ugnu
+    // if(activePlayer === 0){
+    //     scores[0] += roundScore;
+    // }else{
+    //     scores[1] += roundScore;
+    // }
+    scores[activePlayer] += roundScore;
+    // delgetsen deer onoog uurchluh
+    document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
+
+    //tuhain toglogchiig hojson esehiig shalgah 100aas ih eseh
+    if(scores[activePlayer] >= 20){
+        document.getElementById('name-' + activePlayer).textContent = 'ウイナー！';
+        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+    } else{
+        //toglochiin eeljiig solino
+        switchToNextPlayer();
+    }
+})
+
+function switchToNextPlayer (){
+        // elljiin onoog 0 bolgono
+        roundScore = 0;
+        document.getElementById('current-' + activePlayer).textContent = 0;
+        //toglogchiin elljiig solino
+        activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+        document.querySelector('.player-0-panel').classList.toggle('active');
+        document.querySelector('.player-1-panel').classList.toggle('active');
+        diceDom.style.display = 'none';
+}
+
+//shine togloom ehluuleh tovchnii event listener
+document.querySelector('.btn-new').addEventListener('click', function(){
+    console.log("clicked");
+})
