@@ -1,11 +1,17 @@
 var activePlayer, roundScore, scores;
 
+// togloom duussan esehiig hadgalah tuluviin huvisagch
+var isNewGame;
+
 // shoonii zurgiig uzuuleh elementiig dom-s haij olood end hadgalana
 var diceDom = document.querySelector('.dice');
 
 inIt();
 //togloomiig shineeer ehlehed beldene 
 function inIt (){
+    // togloom ehelsen tuluvt oruulna
+    isNewGame = true;
+
     // toglogchiin eeljiig hadgalah variable, player 1 = 0, player 2 = 1
     activePlayer = 0;
     // togloogchdiin tsugluulsan onoog hadgalah variable
@@ -36,7 +42,8 @@ function inIt (){
 
 //anonymous function shoog shideh event handler/listener
 document.querySelector('.btn-roll').addEventListener('click', function(){
-    // 1-6 hurtel sanamsargui too gargaj avna
+    if(isNewGame){
+        // 1-6 hurtel sanamsargui too gargaj avna
     var diceNumber = Math.floor(Math.random() * 6) + 1;
 
     //shoonii zurgiig web deer gargaj irne
@@ -53,10 +60,14 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
         // activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
         switchToNextPlayer();
     }
+    }else{
+        alert('ゲームは終了しました。リスタートを押して、ゲームをリスタートしてください。');
+    }
 });
 
 //hold tovchnii event listener 
 document.querySelector('.btn-hold').addEventListener('click', function () {
+    if(isNewGame === true){
     // ug toglogchiin tsugluulsan eeljiin onoog global onoon deer nemj ugnu
     // if(activePlayer === 0){
     //     scores[0] += roundScore;
@@ -69,11 +80,17 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
 
     //tuhain toglogchiig hojson esehiig shalgah 100aas ih eseh
     if(scores[activePlayer] >= 10){
+        //togloomiig duussan tuluvt oruulna
+        isNewGame = false;
+
         document.getElementById('name-' + activePlayer).textContent = 'ウイナー！';
         document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
     } else{
         //toglochiin eeljiig solino
         switchToNextPlayer();
+    }
+    }else{
+        alert('ゲームは終了しました。リスタートを押して、ゲームをリスタートしてください。');
     }
 })
 
